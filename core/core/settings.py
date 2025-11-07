@@ -41,7 +41,15 @@ INSTALLED_APPS = [
     #External Apps
     'rest_framework',
     'corsheaders',
+    'django_tenants',
+    #My customs apps
+    'accounts',
 ]
+# Tenant settings
+DATABASE_ROUTERS = ('django_tenants.routers.TenantSyncRouter',)
+
+TENANT_MODEL = "accounts.Tenant"
+TENANT_DOMAIN_MODEL = "accounts.Domain"
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -130,3 +138,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# added settings
+AUTH_USER_MODEL = "accounts.User"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+}
